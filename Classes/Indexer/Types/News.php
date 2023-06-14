@@ -193,6 +193,7 @@ class News extends IndexerBase
                 }
                 if (!empty($newsRecord['keywords'])) {
                     $content .= "\n" . $newsRecord['keywords'];
+                    $content .= "\n" . strip_tags($newsRecord['keywords']);
                 }
 
                 // index attached content elements

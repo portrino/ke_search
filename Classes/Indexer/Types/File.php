@@ -222,7 +222,7 @@ class File extends IndexerBase
     {
         // we can continue only when given file is really file and not a directory
         if ($this->fileInfo->getIsFile()) {
-            $className = 'TeaminmediasPluswerk\KeSearch\Indexer\Filetypes\\' . ucfirst($this->fileInfo->getExtension());
+            $className = 'Tpwd\KeSearch\Indexer\Filetypes\\' . ucfirst($this->fileInfo->getExtension());
 
             // check if class exists
             if (class_exists($className)) {
@@ -234,7 +234,10 @@ class File extends IndexerBase
                     // Do the check if a file has already been indexed at this early point in order
                     // to skip the time expensive "get content" process which includes calls to external tools
                     // fetch the file content directly from the index
-                    $fileContent = $this->getFileContentFromIndex($this->getUniqueHashForFile());
+                    // $fileContent = $this->getFileContentFromIndex($this->getUniqueHashForFile());
+                    $fileContent = $fileObj->getContent($file);
+                    $fileContent = strip_tags($fileContent);
+                    $this->addError($fileObj->getErrors());
 
                     // if there's no matching index entry, we execute the  "get file content" method of our new object
                     if (!$fileContent) {
